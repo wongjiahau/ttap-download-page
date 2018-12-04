@@ -25,21 +25,38 @@
                 <div class="card-body" >
                 </div>
                 <div class="card-footer">
-                    <button class="btn" onclick="download4Windows()">
-                        Download TTAP for Windows
-                    </button>
-                    <br/>
-                    <br/>
-                    <button class="btn" onclick="downloadForLinux()">
-                        Download TTAP for Linux 
-                    </button>
-                    <br/>
-                    <br/>
-                    <button class="btn" onclick="download4Mac()">
-                        Download TTAP for macOS 
-                    </button>
-                    <br/>
-                    <br/>
+                    <table class="table" style="text-align: center">
+                        <thead>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <button style="width: 288px" class="btn" onclick="download4Windows()">
+                                        Download TTAP for Windows
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button style="width: 288px" class="btn" onclick="downloadForLinux()">
+                                        Download TTAP for Linux 
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button style="width: 288px" class="btn" onclick="download4Mac()">
+                                        Download TTAP for macOS 
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <select id="url_options" style="width: 288px" class="form-select">
+                        <option value="github">Download from Github</option>
+                        <option value="s3">Download from Amazon S3</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -61,7 +78,7 @@
         }
     }
 
-    const downloadFrom = "github"; // or "github"
+    let downloadFrom = "github"; // or "github"
     function download4Windows() {
         window.open(url[downloadFrom].windows)
     }
@@ -72,6 +89,29 @@
 
     function download4Mac() {
         window.open(url[downloadFrom].mac);
+    }
+
+    function getDownloadCount() {
+        fetch("https://api.github.com/repos/wongjiahau/ttap-web/releases", {"User-Agent": "hou32hou"})
+        .then((result) => result.json())
+        .then((content) => {
+            content[0].assets
+                .map((x) => {
+                    return {
+                        name: x.name,
+                        download_count: x.download_count
+                    }
+                })
+                .forEach((x) => {
+                    console.log(x);
+                });
+        });
+    }
+
+    getDownloadCount();
+
+    document.getElementById("url_options").onchange = function(e) {
+        downloadFrom = this[this.selectedIndex].value;
     }
         
     </script>
