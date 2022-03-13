@@ -74,7 +74,7 @@
             src="https://github.com/wongjiahau/ttap-web/blob/master/public/big_calendar.png?raw=true"
           />
         </div>
-        <div class="card-body"></div>
+        <div class="card-body">Download TTAP Desktop Client (v2)</div>
         <div class="card-footer">
           <table class="table" style="text-align: center">
             <thead></thead>
@@ -86,7 +86,7 @@
                     class="btn"
                     onclick="download4Windows()"
                   >
-                    Download TTAP for Windows
+                    For Windows
                   </button>
                 </td>
               </tr>
@@ -97,7 +97,7 @@
                     class="btn"
                     onclick="downloadForLinux()"
                   >
-                    Download TTAP for Linux
+                    For Linux
                   </button>
                 </td>
               </tr>
@@ -108,17 +108,13 @@
                     class="btn"
                     onclick="download4Mac()"
                   >
-                    Download TTAP for macOS
+                    For macOS (Intel)
                   </button>
                 </td>
               </tr>
             </tbody>
           </table>
           <br />
-          <select id="url_options" style="width: 288px" class="form-select">
-            <option value="github">Download from Github</option>
-            <option value="s3">Download from Amazon S3</option>
-          </select>
         </div>
       </div>
     </div>
@@ -152,39 +148,32 @@
   </footer>
   <script>
     const url = {
-      s3: {
-        windows:
-          "https://s3-ap-southeast-1.amazonaws.com/ttap-desktop-clients/TTAP+Setup+1.0.0.exe",
-        mac: "https://s3-ap-southeast-1.amazonaws.com/ttap-desktop-clients/MacOs-TTAP.zip",
-        linux:
-          "https://s3-ap-southeast-1.amazonaws.com/ttap-desktop-clients/Linux-TTAP.AppImage",
-      },
-      github: {
-        windows:
-          "https://github.com/wongjiahau/ttap-web/releases/download/v1/TTAP-Windows.exe",
-        mac: "https://github.com/wongjiahau/ttap-web/releases/download/v1/TTAP-macOS.zip",
-        linux:
-          "https://github.com/wongjiahau/ttap-web/releases/download/v1/TTAP-Linux.AppImage",
-      },
+      windows:
+        "https://github.com/wongjiahau/ttap-desktop-client/releases/download/v2.0.0/TTAP.Setup.2.0.0.exe",
+      mac: "https://github.com/wongjiahau/ttap-desktop-client/releases/download/v2.0.0/TTAP-2.0.0.dmg",
+      linux:
+        "https://github.com/wongjiahau/ttap-desktop-client/releases/download/v2.0.0/TTAP-2.0.0.AppImage",
     };
 
-    let downloadFrom = "github"; // or "github"
     function download4Windows() {
-      window.open(url[downloadFrom].windows);
+      window.open(url.windows);
     }
 
     function downloadForLinux() {
-      window.open(url[downloadFrom].linux);
+      window.open(url.linux);
     }
 
     function download4Mac() {
-      window.open(url[downloadFrom].mac);
+      window.open(url.mac);
     }
 
     function getDownloadCount() {
-      fetch("https://api.github.com/repos/wongjiahau/ttap-web/releases", {
-        "User-Agent": "hou32hou",
-      })
+      fetch(
+        "https://api.github.com/repos/wongjiahau/ttap-desktop-client/releases",
+        {
+          "User-Agent": "hou32hou",
+        }
+      )
         .then((result) => result.json())
         .then((content) => {
           content[0].assets
@@ -201,9 +190,5 @@
     }
 
     getDownloadCount();
-
-    document.getElementById("url_options").onchange = function (e) {
-      downloadFrom = this[this.selectedIndex].value;
-    };
   </script>
 </html>
