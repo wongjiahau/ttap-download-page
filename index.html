@@ -1,154 +1,209 @@
 <html>
-    <head>
-        <link rel="shortcut icon" href="https://raw.githubusercontent.com/wongjiahau/ttap-web/master/public/favicon.ico">
-        <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
-        <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
-        <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
-        <!-- Primary Meta Tags -->
-        <title>TTAP for UTAR Students</title>
-        <meta name="title" content="TTAP for UTAR Students">
-        <meta name="description" content="Tired of arranging time table manually? Download TTAP. The timetable arranging program for UTAR (Universiti Tunku Abdul Rahman) students. ">
+  <head>
+    <link
+      rel="shortcut icon"
+      href="https://raw.githubusercontent.com/wongjiahau/ttap-web/master/public/favicon.ico"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/spectre.css/dist/spectre.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css"
+    />
+    <!-- Primary Meta Tags -->
+    <title>TTAP for UTAR Students</title>
+    <meta name="title" content="TTAP for UTAR Students" />
+    <meta
+      name="description"
+      content="Tired of arranging time table manually? Download TTAP. The timetable arranging program for UTAR (Universiti Tunku Abdul Rahman) students. "
+    />
 
-        <!-- Open Graph / Facebook -->
-        <meta property="og:type" content="website">
-        <meta property="og:url" content="https://get-ttap.surge.sh/">
-        <meta property="og:title" content="TTAP for UTAR Students">
-        <meta property="og:description" content="Tired of arranging time table manually? Download TTAP. The timetable arranging program for UTAR (Universiti Tunku Abdul Rahman) students. ">
-        <meta property="og:image" content="">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://get-ttap.surge.sh/" />
+    <meta property="og:title" content="TTAP for UTAR Students" />
+    <meta
+      property="og:description"
+      content="Tired of arranging time table manually? Download TTAP. The timetable arranging program for UTAR (Universiti Tunku Abdul Rahman) students. "
+    />
+    <meta property="og:image" content="" />
 
-        <!-- Twitter -->
-        <meta property="twitter:card" content="summary_large_image">
-        <meta property="twitter:url" content="https://get-ttap.surge.sh/">
-        <meta property="twitter:title" content="TTAP for UTAR Students">
-        <meta property="twitter:description" content="Tired of arranging time table manually? Download TTAP. The timetable arranging program for UTAR (Universiti Tunku Abdul Rahman) students. ">
-        <meta property="twitter:image" content="">
-    </head>
-    <style>
-        footer {
-            font-size: 10px;
-        }
-    </style>
-    <title>Download TTAP</title>
-    <body style="text-align:center; display: grid; align-items: center; justify-content: center; padding: 28px; grid-gap: 12px;">
-        <div style="width: 650px;" class="p-centered">
-            <div class="wrapper card">
-                <div class="card-header">
-                    <div class="card-title h1">Tired of arranging timetable?</div> 
-                    <div class="card-title h1">Try T.T.A.P.</div> 
-                    <div class="card-subtitle text-gray">The Time Table Arranging Program exclusively for UTAR students.</div>
-                </div>
-                <div class="card-image">
-                    <img src="https://github.com/wongjiahau/ttap-web/blob/master/public/big_calendar.png?raw=true">
-                </div>
-                <div class="card-body" >
-                </div>
-                <div class="card-footer">
-                    <table class="table" style="text-align: center">
-                        <thead>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <button style="width: 288px" class="btn" onclick="download4Windows()">
-                                        Download TTAP for Windows
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <button style="width: 288px" class="btn" onclick="downloadForLinux()">
-                                        Download TTAP for Linux 
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <button style="width: 288px" class="btn" onclick="download4Mac()">
-                                        Download TTAP for macOS 
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <br>
-                    <select id="url_options" style="width: 288px" class="form-select">
-                        <option value="github">Download from Github</option>
-                        <option value="s3">Download from Amazon S3</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div>
-            <div id="disqus_thread"></div>
-                <script>
-                var disqus_config = function () {
-                this.page.url = 'https://get-ttap.surge.sh/'
-                this.page.identifier = 'https-get-ttap-surge-sh'
-                };
-                
-                (function() { // DON'T EDIT BELOW THIS LINE
-                var d = document, s = d.createElement('script');
-                s.src = 'https://https-get-ttap-surge-sh.disqus.com/embed.js';
-                s.setAttribute('data-timestamp', +new Date());
-                (d.head || d.body).appendChild(s);
-                })();
-                </script>
-                <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                            
-        </div>
-    </body>
-    <footer>
-        <div></div>
-    </footer>
-    <script>
-    const url = {
-        s3: {
-            windows: 'https://s3-ap-southeast-1.amazonaws.com/ttap-desktop-clients/TTAP+Setup+1.0.0.exe',
-            mac:     'https://s3-ap-southeast-1.amazonaws.com/ttap-desktop-clients/MacOs-TTAP.zip',
-            linux:   'https://s3-ap-southeast-1.amazonaws.com/ttap-desktop-clients/Linux-TTAP.AppImage'
-        },
-        github: {
-            windows: 'https://github.com/wongjiahau/ttap-web/releases/download/v1/TTAP-Windows.exe',
-            mac:     'https://github.com/wongjiahau/ttap-web/releases/download/v1/TTAP-macOS.zip',
-            linux:   'https://github.com/wongjiahau/ttap-web/releases/download/v1/TTAP-Linux.AppImage'
-        }
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://get-ttap.surge.sh/" />
+    <meta property="twitter:title" content="TTAP for UTAR Students" />
+    <meta
+      property="twitter:description"
+      content="Tired of arranging time table manually? Download TTAP. The timetable arranging program for UTAR (Universiti Tunku Abdul Rahman) students. "
+    />
+    <meta property="twitter:image" content="" />
+  </head>
+  <style>
+    footer {
+      font-size: 10px;
     }
+  </style>
+  <title>Download TTAP</title>
+  <body
+    style="
+      text-align: center;
+      display: grid;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+      grid-gap: 12px;
+    "
+  >
+    <div style="width: 650px" class="p-centered">
+      <div class="wrapper card">
+        <div class="card-header">
+          <div class="card-title h1">Tired of arranging timetable?</div>
+          <div class="card-title h1">Try T.T.A.P.</div>
+          <div class="card-subtitle text-gray">
+            The Time Table Arranging Program exclusively for UTAR students.
+          </div>
+        </div>
+        <div class="card-image">
+          <img
+            src="https://github.com/wongjiahau/ttap-web/blob/master/public/big_calendar.png?raw=true"
+          />
+        </div>
+        <div class="card-body"></div>
+        <div class="card-footer">
+          <table class="table" style="text-align: center">
+            <thead></thead>
+            <tbody>
+              <tr>
+                <td>
+                  <button
+                    style="width: 288px"
+                    class="btn"
+                    onclick="download4Windows()"
+                  >
+                    Download TTAP for Windows
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <button
+                    style="width: 288px"
+                    class="btn"
+                    onclick="downloadForLinux()"
+                  >
+                    Download TTAP for Linux
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <button
+                    style="width: 288px"
+                    class="btn"
+                    onclick="download4Mac()"
+                  >
+                    Download TTAP for macOS
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <br />
+          <select id="url_options" style="width: 288px" class="form-select">
+            <option value="github">Download from Github</option>
+            <option value="s3">Download from Amazon S3</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div id="disqus_thread"></div>
+      <script>
+        var disqus_config = function () {
+          this.page.url = "https://get-ttap.surge.sh/";
+          this.page.identifier = "https-get-ttap-surge-sh";
+        };
+
+        (function () {
+          // DON'T EDIT BELOW THIS LINE
+          var d = document,
+            s = d.createElement("script");
+          s.src = "https://https-get-ttap-surge-sh.disqus.com/embed.js";
+          s.setAttribute("data-timestamp", +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+      <noscript
+        >Please enable JavaScript to view the
+        <a href="https://disqus.com/?ref_noscript"
+          >comments powered by Disqus.</a
+        ></noscript
+      >
+    </div>
+  </body>
+  <footer>
+    <div></div>
+  </footer>
+  <script>
+    const url = {
+      s3: {
+        windows:
+          "https://s3-ap-southeast-1.amazonaws.com/ttap-desktop-clients/TTAP+Setup+1.0.0.exe",
+        mac: "https://s3-ap-southeast-1.amazonaws.com/ttap-desktop-clients/MacOs-TTAP.zip",
+        linux:
+          "https://s3-ap-southeast-1.amazonaws.com/ttap-desktop-clients/Linux-TTAP.AppImage",
+      },
+      github: {
+        windows:
+          "https://github.com/wongjiahau/ttap-web/releases/download/v1/TTAP-Windows.exe",
+        mac: "https://github.com/wongjiahau/ttap-web/releases/download/v1/TTAP-macOS.zip",
+        linux:
+          "https://github.com/wongjiahau/ttap-web/releases/download/v1/TTAP-Linux.AppImage",
+      },
+    };
 
     let downloadFrom = "github"; // or "github"
     function download4Windows() {
-        window.open(url[downloadFrom].windows)
+      window.open(url[downloadFrom].windows);
     }
 
     function downloadForLinux() {
-        window.open(url[downloadFrom].linux)
+      window.open(url[downloadFrom].linux);
     }
 
     function download4Mac() {
-        window.open(url[downloadFrom].mac);
+      window.open(url[downloadFrom].mac);
     }
 
     function getDownloadCount() {
-        fetch("https://api.github.com/repos/wongjiahau/ttap-web/releases", {"User-Agent": "hou32hou"})
+      fetch("https://api.github.com/repos/wongjiahau/ttap-web/releases", {
+        "User-Agent": "hou32hou",
+      })
         .then((result) => result.json())
         .then((content) => {
-            content[0].assets
-                .map((x) => {
-                    return {
-                        name: x.name,
-                        download_count: x.download_count
-                    }
-                })
-                .forEach((x) => {
-                    console.log(x);
-                });
+          content[0].assets
+            .map((x) => {
+              return {
+                name: x.name,
+                download_count: x.download_count,
+              };
+            })
+            .forEach((x) => {
+              console.log(x);
+            });
         });
     }
 
     getDownloadCount();
 
-    document.getElementById("url_options").onchange = function(e) {
-        downloadFrom = this[this.selectedIndex].value;
-    }
-        
-    </script>
+    document.getElementById("url_options").onchange = function (e) {
+      downloadFrom = this[this.selectedIndex].value;
+    };
+  </script>
 </html>
