@@ -1,10 +1,9 @@
 ## How to publish?
+
 ```
-surge --domain https://get-ttap.surge.sh --project .
+npm run publish
 ```
 
 ## How to see download counts?
 
 Check browser log.
-
-
