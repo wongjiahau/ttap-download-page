@@ -1,5 +1,6 @@
 <html>
   <head>
+    <meta charset="UTF-8" />
     <link
       rel="shortcut icon"
       href="https://raw.githubusercontent.com/wongjiahau/ttap-web/master/public/favicon.ico"
@@ -76,64 +77,8 @@
       grid-gap: 12px;
     "
   >
-    <div style="width: 650px" class="p-centered">
-      <div class="wrapper card">
-        <div class="card-header">
-          <div class="card-title h1">Tired of arranging timetable?</div>
-          <div class="card-title h1">Try T.T.A.P.</div>
-          <div class="card-subtitle text-gray">
-            The Time Table Arranging Program exclusively for UTAR students.
-          </div>
-        </div>
-        <div class="card-image">
-          <img
-            src="https://github.com/wongjiahau/ttap-web/blob/master/public/big_calendar.png?raw=true"
-          />
-        </div>
-        <div class="card-body">Download TTAP Desktop Client (v3)</div>
-        <div class="card-footer">
-          <table class="table" style="text-align: center">
-            <thead></thead>
-            <tbody>
-              <tr>
-                <td>
-                  <button
-                    style="width: 288px"
-                    class="btn"
-                    onclick="download4Windows()"
-                  >
-                    For Windows
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <button
-                    style="width: 288px"
-                    class="btn"
-                    onclick="downloadForLinux()"
-                  >
-                    For Linux
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <button
-                    style="width: 288px"
-                    class="btn"
-                    onclick="download4Mac()"
-                  >
-                    For macOS (Intel)
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <br />
-        </div>
-      </div>
-    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
     <div>
       <div id="disqus_thread"></div>
       <script>
@@ -159,52 +104,4 @@
       >
     </div>
   </body>
-  <footer>
-    <div></div>
-  </footer>
-  <script>
-    const url = {
-      windows:
-        "https://github.com/wongjiahau/ttap-desktop-client/releases/download/3.0.0/TTAP.Setup.3.0.0.exe",
-      mac: "https://github.com/wongjiahau/ttap-desktop-client/releases/download/3.0.0/TTAP-3.0.0.dmg",
-      linux:
-        "https://github.com/wongjiahau/ttap-desktop-client/releases/download/3.0.0/TTAP-3.0.0.AppImage",
-    };
-
-    function download4Windows() {
-      window.open(url.windows);
-    }
-
-    function downloadForLinux() {
-      window.open(url.linux);
-    }
-
-    function download4Mac() {
-      window.open(url.mac);
-    }
-
-    function getDownloadCount() {
-      fetch(
-        "https://api.github.com/repos/wongjiahau/ttap-desktop-client/releases",
-        {
-          "User-Agent": "hou32hou",
-        }
-      )
-        .then((result) => result.json())
-        .then((content) => {
-          content[0].assets
-            .map((x) => {
-              return {
-                name: x.name,
-                download_count: x.download_count,
-              };
-            })
-            .forEach((x) => {
-              console.log(x);
-            });
-        });
-    }
-
-    getDownloadCount();
-  </script>
 </html>
