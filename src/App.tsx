@@ -1,44 +1,49 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 
+type Release = {
+  tag_name: string;
+  published_at: string;
+  assets: ReleaseAsset[];
+};
+
+type ReleaseAsset = {
+  name: string;
+  browser_download_url: string;
+  download_count: number;
+};
+
 function App() {
-  const [items, setItems] = useState(
-    [] as {
-      name: string;
-      platform: "Windows" | "Linux" | "macOS";
-      downloadUrl: string;
-      downloadCount: number;
-    }[]
-  );
-  const [tag, setTag] = useState("");
+  const [releases, setReleases] = useState([] as Release[]);
   useEffect(() => {
     fetch(
       "https://api.github.com/repos/wongjiahau/ttap-desktop-client/releases"
     )
       .then((result) => result.json())
-      .then((content) => {
-        const latestRelease = content[0];
-        setTag(latestRelease.tag_name);
-        setItems(
-          (latestRelease?.assets as any[]).map((x: any) => {
-            return {
-              name: x.name,
-              platform: x.name.endsWith("exe")
-                ? "Windows"
-                : x.name.endsWith("dmg")
-                ? "macOS"
-                : "Linux",
-              downloadCount: x.download_count,
-              downloadUrl: x.browser_download_url,
-            };
-          })
-        );
-      })
+      .then(setReleases)
       .catch((error) => alert(error));
   }, []);
 
-  // For debug purpose
-  console.log(items);
+  const sortedReleases = releases.sort((a, b) =>
+    a.published_at.localeCompare(b.published_at)
+  );
+
+  // For debug purposes
+  console.log({ sortedReleases });
+
+  const latestRelease = sortedReleases[sortedReleases.length - 1];
+
+  const firstRelease = sortedReleases[0];
+  const assets = latestRelease?.assets ?? [];
+
+  const tag = latestRelease?.tag_name;
+
+  const totalDownloadCount = releases.reduce(
+    (sum, release) =>
+      sum +
+      release.assets.reduce((sum, asset) => sum + asset.download_count, sum),
+    0
+  );
 
   return (
     <div style={{ width: 650 }} className="p-centered">
@@ -57,19 +62,27 @@ function App() {
         <div className="card-footer">
           <table className="table" style={{ textAlign: "center" }}>
             <tbody>
-              {items
+              {assets
+                .map((asset) => ({
+                  ...asset,
+                  platform: asset.name.endsWith("exe")
+                    ? "Windows"
+                    : asset.name.endsWith("dmg")
+                    ? "macOS"
+                    : "Linux",
+                }))
                 .sort((a, b) => b.platform.localeCompare(a.platform))
-                .map((item, index) => (
+                .map((asset, index) => (
                   <tr key={index}>
-                    <td>{item.platform}</td>
-                    <td>{item.name}</td>
+                    <td>{asset.platform}</td>
+                    <td>{asset.name}</td>
                     <td>
                       <button
                         style={{ width: 288, alignSelf: "center" }}
                         className="btn"
-                        onClick={() => window.open(item.downloadUrl)}
+                        onClick={() => window.open(asset.browser_download_url)}
                       >
-                        Download
+                        Download ({asset.download_count})
                       </button>
                     </td>
                   </tr>
@@ -87,6 +100,11 @@ function App() {
           >
             All Releases
           </button>
+          <div>
+            Total downloads since{" "}
+            {new Date(firstRelease?.published_at ?? 0).toLocaleDateString()}{" "}
+            (all versions, all platforms): {totalDownloadCount}
+          </div>
         </div>
       </div>
     </div>
