@@ -60,15 +60,20 @@ function App() {
         </div>
         <div className="card-body">Download TTAP Desktop Client ({tag})</div>
         <div className="card-footer">
-          <table className="table" style={{ textAlign: "center" }}>
+          <table
+            className="table"
+            style={{ textAlign: "center", whiteSpace: "nowrap" }}
+          >
             <tbody>
               {assets
                 .map((asset) => ({
                   ...asset,
                   platform: asset.name.endsWith("exe")
                     ? "Windows"
+                    : asset.name.endsWith("arm64.dmg")
+                    ? "macOS (Apple Silicon)"
                     : asset.name.endsWith("dmg")
-                    ? "macOS"
+                    ? "macOS (Intel)"
                     : "Linux",
                 }))
                 .sort((a, b) => b.platform.localeCompare(a.platform))
@@ -78,7 +83,7 @@ function App() {
                     <td>{asset.name}</td>
                     <td>
                       <button
-                        style={{ width: 288, alignSelf: "center" }}
+                        style={{ width: 180, alignSelf: "center" }}
                         className="btn"
                         onClick={() => window.open(asset.browser_download_url)}
                       >
