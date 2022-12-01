@@ -110,6 +110,10 @@ function App() {
             {new Date(firstRelease?.published_at ?? 0).toLocaleDateString()}{" "}
             (all versions, all platforms): {totalDownloadCount}
           </div>
+          <div>
+            Have questions? Ask us at{" "}
+            <a href="https://discord.gg/azD6hjSrGX">Discord</a>
+          </div>
         </div>
       </div>
     </div>
